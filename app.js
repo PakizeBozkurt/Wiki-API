@@ -26,46 +26,55 @@ const articleSchema = {
 
 const Article = mongoose.model("Article", articleSchema);
 
+app
+  .route("/articles")
+
+  .get(function (req, res) {
+    Article.find(function (err, foundArticles) {
+      if (!err) {
+        res.send(foundArticles);
+      } else {
+        res.send(err);
+      }
+    });
+  })
+
+  .post(function (req, res) {
+    const newArticle = new Article({
+      title: req.body.title,
+      content: req.body.content,
+    });
+
+    newArticle.save(function (err) {
+      if (!err) {
+        res.send("Successfully added a new article.");
+      } else {
+        res.send(err);
+      }
+    });
+  })
+
+  .delete(function (req, res) {
+    Article.deleteMany(function (err) {
+      if (!err) {
+        res.send("Successfully deleted all articles.");
+      } else {
+        res.send(err);
+      }
+    });
+  });
+
 //GET Route for all of the articles.
 
-app.get("/articles", function (req, res) {
-  Article.find(function (err, foundArticles) {
-    if (!err) {
-      res.send(foundArticles);
-    } else {
-      res.send(err);
-    }
-  });
-});
+// app.get("/articles", );
 
 // POST creates one new article
 
-app.post("/articles", function (req, res) {
-  const newArticle = new Article({
-    title: req.body.title,
-    content: req.body.content,
-  });
-
-  newArticle.save(function(err){
-    if(!err){
-      res.send("Successfully added a new article.");
-    } else {
-      res.send(err);
-    }
-  });
-});
+// app.post("/articles", );
 
 // DELETE delete all articles
 
-app.delete("/articles", function(req, res) {
-Article.deleteMany(function(err) {
-  if(!err){
-    res.send("Successfully deleted all articles.");
-  } else {
-    res.send(err);
-  }
-});
-});
+// app.delete("/articles", );
 
 app.listen(3011, function () {
   console.log("Server started on port 3011");
