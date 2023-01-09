@@ -28,7 +28,7 @@ const Article = mongoose.model("Article", articleSchema);
 
 app
   .route("/articles")
-
+  //GET Route for all of the articles.
   .get(function (req, res) {
     Article.find(function (err, foundArticles) {
       if (!err) {
@@ -38,7 +38,7 @@ app
       }
     });
   })
-
+  // POST creates one new article.
   .post(function (req, res) {
     const newArticle = new Article({
       title: req.body.title,
@@ -53,7 +53,7 @@ app
       }
     });
   })
-
+  // DELETE delete all articles.
   .delete(function (req, res) {
     Article.deleteMany(function (err) {
       if (!err) {
@@ -63,18 +63,6 @@ app
       }
     });
   });
-
-//GET Route for all of the articles.
-
-// app.get("/articles", );
-
-// POST creates one new article
-
-// app.post("/articles", );
-
-// DELETE delete all articles
-
-// app.delete("/articles", );
 
 app.listen(3011, function () {
   console.log("Server started on port 3011");
