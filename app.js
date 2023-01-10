@@ -4,6 +4,7 @@ const express = require("express");
 
 const ejs = require("ejs");
 const mongoose = require("mongoose");
+const req = require("express/lib/request");
 
 const app = express();
 
@@ -22,9 +23,11 @@ const articleSchema = {
   content: String,
 };
 
-//Article mode l
+//Article model
 
 const Article = mongoose.model("Article", articleSchema);
+
+///////////////////////////////Request Targeting all Articles//////////////////////////
 
 app
   .route("/articles")
@@ -63,6 +66,18 @@ app
       }
     });
   });
+
+///////////////////////////////Request Targeting A Specific Articles//////////////////////////
+
+
+
+app.route("/articles/:articleTitle")
+
+//req.params.articleTitle = "jQuery"
+
+.get(function (req, res) {
+  Article.findOne({title: req.params.articleTitle})
+});
 
 app.listen(3011, function () {
   console.log("Server started on port 3011");
