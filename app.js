@@ -76,7 +76,13 @@ app.route("/articles/:articleTitle")
 //req.params.articleTitle = "jQuery"
 
 .get(function (req, res) {
-  Article.findOne({title: req.params.articleTitle})
+  Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
+    if(foundArticle) {
+      res.send(foundArticle);
+    } else {
+      res.send("No articles matching that title was found.");
+    }
+  });
 });
 
 app.listen(3011, function () {
