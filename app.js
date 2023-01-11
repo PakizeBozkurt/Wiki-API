@@ -69,34 +69,36 @@ app
 
 ///////////////////////////////Request Targeting A Specific Articles//////////////////////////
 
+app
+  .route("/articles/:articleTitle")
 
+  //req.params.articleTitle = "jQuery"
 
-app.route("/articles/:articleTitle")
-
-//req.params.articleTitle = "jQuery"
-
-.get(function (req, res) {
-  Article.findOne({title: req.params.articleTitle}, function(err, foundArticle){
-    if(foundArticle) {
-      res.send(foundArticle);
-    } else {
-      res.send("No articles matching that title was found.");
-    }
+  .get(function (req, res) {
+    Article.findOne(
+      { title: req.params.articleTitle },
+      function (err, foundArticle) {
+        if (foundArticle) {
+          res.send(foundArticle);
+        } else {
+          res.send("No articles matching that title was found.");
+        }
+      }
+    );
+  })
+// Entire replace all data.
+  .put(function (req, res) {
+    Article.update(
+      { title: req.params.articleTitle },
+      { title: req.body.title, content: req.body.content },
+      { overwrite: true },
+      function (err) {
+        if (!err) {
+          res.send("Successfully updated article.");
+        }
+      }
+    );
   });
-}) 
-
-.put(function (req, res) {
-Article.update(
-  {title: req.params.articleTitle},
-  {title: req.body.title, content: req.body.content},
-  {overwrite: true},
-  function(err){
-    if(!err){
-      res.send("Successfully updated article.");
-    }
-  }
-);
-});
 
 app.listen(3011, function () {
   console.log("Server started on port 3011");
