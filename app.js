@@ -86,7 +86,7 @@ app
       }
     );
   })
-// Entire replace all data.
+  // Entire replace all data.
   .put(function (req, res) {
     Article.update(
       { title: req.params.articleTitle },
@@ -94,24 +94,34 @@ app
       { overwrite: true },
       function (err) {
         if (!err) {
-          res.send("Successfully updated article.");
+          res.send("Successfully updated the selected article.");
         }
       }
     );
   })
-   
-  .patch(function(req, res) {
+
+  .patch(function (req, res) {
     Article.update(
-      {title: req.params.articleTitle},
-      {$set: req.body},
-      function(err){
-        if(!err){
-          res.send("Successfully updated article.")
+      { title: req.params.articleTitle },
+      { $set: req.body },
+      function (err) {
+        if (!err) {
+          res.send("Successfully updated article.");
         } else {
           res.send(err);
         }
       }
     );
+  })
+
+  .delete(function (req, res) {
+    Article.deleteOne({ title: req.params.articleTitle }, function (err) {
+      if (!err) {
+        res.send("Successfully deleted the correspondin article.");
+      } else {
+        res.send(err);
+      }
+    });
   });
 
 app.listen(3011, function () {
