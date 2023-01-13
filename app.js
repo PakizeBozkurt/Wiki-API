@@ -1,4 +1,4 @@
-//jshint esversion:6
+// Load the 'express' module which makes writing webservers easy.
 
 const express = require("express");
 
@@ -6,10 +6,12 @@ const ejs = require("ejs");
 const mongoose = require("mongoose");
 const req = require("express/lib/request");
 
+// Start the express application and save a reference to it in the app variable.
 const app = express();
 
 app.set("view engine", "ejs");
 
+// Add facility.
 app.use(express.static("public"));
 
 // Connection with MongoDB
